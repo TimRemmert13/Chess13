@@ -7,17 +7,14 @@ public abstract class Piece {
 	
 	  private String name;
 	  
-	  private Tile tile;
-	  
 	  private Player player;
 	  
-	  public Piece(String name, Tile tile, Player p){
+	  public Piece(String name, Player p){
 		  this.name = name;
-		  this.tile = tile;
 		  this.player = player;
 	  }
-	  
-	  public void setName(String s){
+
+	public void setName(String s){
 		   this.name = s;
 	  }
 	  
@@ -25,16 +22,8 @@ public abstract class Piece {
 		  this.player = p;
 	  }
 	  
-	  public void setTile(Tile t){
-		  this.tile = t;
-	  }
-	  
 	  public String getName(){
 		  return this.name;
-	  }
-	  
-	  public Tile getTile(){
-		  return this.tile;
 	  }
 	  
 	  public Player getPlayer(){
@@ -44,5 +33,7 @@ public abstract class Piece {
 	  public abstract String getType();
 	  
 	  public abstract boolean validPath(String s);
+	  
+	  public abstract String toString();
 
 }

@@ -4,8 +4,8 @@ import game.Player;
 import game.Tile;
 
 public class Queen extends Piece{
-	public Queen(String name, Tile tile, Player p){
-		super(name, tile, p);
+	public Queen(String name, Player p){
+		super(name, p);
 	}
 	//leaving blank for now will implement later
 	 public boolean validPath(String s){
@@ -13,6 +13,10 @@ public class Queen extends Piece{
 	 }
 	 public String getType(){
 		 return "Queen";
+	 }
+	 @Override
+	 public String toString(){
+		 return getName();
 	 }
 
 }
