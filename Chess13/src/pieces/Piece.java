@@ -2,6 +2,7 @@ package pieces;
 
 import game.Player;
 import game.Tile;
+import game.Board;
 
 public abstract class Piece {
 	
@@ -11,7 +12,7 @@ public abstract class Piece {
 	  
 	  public Piece(String name, Player p){
 		  this.name = name;
-		  this.player = player;
+		  this.player = p;
 	  }
 
 	public void setName(String s){
@@ -30,9 +31,16 @@ public abstract class Piece {
 		  return this.player;
 	  }
 	  
-	  public abstract String getType();
+	  public boolean takePiece(Board board, String input){
+			int dest[] = board.map(input.substring(3, 4));
+			if(board.emptyCheck(dest[0], dest[1])){
+				return false;
+			}
+			return true;
+		}
 	  
-	  public abstract boolean validPath(String s);
+	  public abstract boolean validPath(Board board, String input);
+	 
 	  
 	  public abstract String toString();
 

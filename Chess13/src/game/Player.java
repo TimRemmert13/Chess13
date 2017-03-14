@@ -4,16 +4,27 @@ public class Player {
 	
 	private String color;
 	
+	private boolean turn = false;
+	
 	public Player(String color){
 		this.color = color;
 	}
 	
-	public void setPlayer(String color){
+	public void setColor(String color){
 		this.color = color;
 	}
 	
-	public String getPlayer(){
+	public String getColor(){
 		return this.color;
+	}
+	
+	public void toggleTurn(){
+		if(this.turn == false){
+			this.turn = true;
+		}
+		else{
+			this.turn = false;
+		}
 	}
 	
 	public String toString(){

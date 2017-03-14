@@ -1,17 +1,26 @@
 package game;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import pieces.*;
 
 public class Board {
 	
-	protected final Tile[][] board;
+    Tile[][] board;
+    
+    private static final Map<Character,Integer> columns = buildColumnsMap();
+    
+    private static final Map<Character,Integer> rows = buildRowsMap();
+    
 	
 	public Board(int x, int y){
 		this.board = new Tile[x][y];
 		
-		// create players
-		Player black = new Player("black");
-		Player white = new Player("white");
+		  final Player black = new Player("black");
+		    
+		  final Player white = new Player("white");
 		
 		//create black pieces 
 		Piece lbR = new Rook("bR", black);
@@ -194,9 +203,69 @@ public class Board {
 			this.board[7][4] = e1;
 			this.board[7][5] = f1;
 			this.board[7][6] = g1;
-			this.board[7][7] = h1;
-					
+			this.board[7][7] = h1;	
+			
 	}
+	
+	private static Map<Character, Integer> buildColumnsMap(){
+		 Map<Character,Integer> columnsmap = new HashMap<Character, Integer>();
+		//initialize maps 
+		//columns
+		columnsmap.put('a', 0);
+		columnsmap.put('b', 1);
+		columnsmap.put('c', 2);
+		columnsmap.put('d', 3);
+		columnsmap.put('e', 4);
+		columnsmap.put('f', 5);
+		columnsmap.put('g', 6);
+		columnsmap.put('h', 7);
+		return columnsmap;
+	}
+	
+	private static Map<Character,Integer> buildRowsMap(){
+		Map<Character,Integer> rowsMap = new HashMap<Character, Integer>();
+		//rows
+		rowsMap.put('8',0);
+		rowsMap.put('7',1);
+		rowsMap.put('6',2);
+		rowsMap.put('5',3);
+		rowsMap.put('4',4);
+		rowsMap.put('3',5);
+		rowsMap.put('2',6);
+		rowsMap.put('1',7);	
+		return rowsMap;	
+	}
+
+	public int[] map(String input){
+		int x, y;
+		char column = input.charAt(0);
+		char row = input.charAt(1);
+		y = this.columns.get(column);
+		x = this.rows.get(row);
+		int arr[] = {x,y};
+		return arr;
+		
+	}
+	
+	public boolean emptyCheck(int x, int y){
+		if(this.board[x][y].isEmpty() == true){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	 public Piece getPiece(int x, int y){
+		 return this.board[x][y].getPiece();
+	 }
+	 
+	 public Player getPlayer(int x, int y){
+		 return this.board[x][y].getPiece().getPlayer();
+		
+	 }
+	 
+
 	public void printBoard(){
 		int row = 8;
 		for(int i = 0; i < 8; i++){

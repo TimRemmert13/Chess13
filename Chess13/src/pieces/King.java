@@ -1,19 +1,17 @@
 package pieces;
 
 import game.Player;
-import game.Tile;
+import game.Board;
 
 public class King extends Piece{
 	 
 	public King(String name, Player p){
 		super(name, p);
 	}
-	//leaving blank for now will implement later
-	 public boolean validPath(String s){
+	
+	@Override
+	 public boolean validPath(Board board, String s){
 		 return false;
-	 }
-	 public String getType(){
-		 return "King";
 	 }
 	 @Override
 	 public String toString(){
