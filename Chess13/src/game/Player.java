@@ -18,6 +18,10 @@ public class Player {
 		return this.color;
 	}
 	
+	public boolean getTurn(){
+		return this.turn;
+	}
+	
 	public void toggleTurn(){
 		if(this.turn == false){
 			this.turn = true;

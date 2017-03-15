@@ -21,15 +21,14 @@ public class Pawn extends Piece{
 					if(board.emptyCheck(start[0]+1, start[1])){
 						return true;
 					}
-					else if(dest[0] == start[0] +2){
+				}
+					if(dest[0] == start[0] +2){
 						if(board.emptyCheck(start[0]+1, start[1]) && board.emptyCheck(start[0] +1,  start[1])){
 							return true;
 						}
-					}else{
-						return false;
 					}
 				}
-			}
+			
 				// not starting position pawn
 				else if (dest[0] == start[0] +1){
 					if(board.emptyCheck(start[0]+1, start[1])){
@@ -49,20 +48,18 @@ public class Pawn extends Piece{
 		}
 		if(this.getPlayer().getColor() == "white"){
 			//starting position pawn can jump a space
-			if(start[0] == 7){
+			if(start[0] == 6){
 				if(dest[0] == start[0] -1){
 					if(board.emptyCheck(start[0]-1, start[1])){
 						return true;
 					}
+				}
 					else if(dest[0] == start[0] -2){
 						if(board.emptyCheck(start[0]-1, start[1]) && board.emptyCheck(start[0] -1,  start[1])){
 							return true;
 						}
-					}else{
-						return false;
 					}
 				}
-			}
 				// not starting position pawn
 				else if (dest[0] == start[0] -1){
 					if(board.emptyCheck(start[0]-1, start[1])){
@@ -73,9 +70,6 @@ public class Pawn extends Piece{
 			if(dest[0] == start[0] -1 && dest[1] == start[1]-1){
 				if(board.getPlayer(dest[0], dest[1]) != this.getPlayer()){
 					return true;
-				}
-				else{
-					return false;
 				}
 			}
 			

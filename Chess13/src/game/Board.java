@@ -14,13 +14,13 @@ public class Board {
     
     private static final Map<Character,Integer> rows = buildRowsMap();
     
+    final Player black = new Player("black");
+    
+	final Player white = new Player("white");
+    
 	
 	public Board(int x, int y){
 		this.board = new Tile[x][y];
-		
-		  final Player black = new Player("black");
-		    
-		  final Player white = new Player("white");
 		
 		//create black pieces 
 		Piece lbR = new Rook("bR", black);
@@ -235,6 +235,27 @@ public class Board {
 		rowsMap.put('1',7);	
 		return rowsMap;	
 	}
+	public void toogleturns(){
+		/*
+		for(int i = 0; i < 8; i ++){
+			for(int k = 0; k < 8; k++){
+				if(this.board[i][k].getPiece().getPlayer().getColor() == "white"){
+					this.board[i][k].getPiece().getPlayer().toggleTurn();
+					break;
+				}
+			}
+		}
+		for(int i = 0; i < 8; i ++){
+			for(int k = 0; k < 8; k++){
+				if(this.board[i][k].getPiece().getPlayer().getColor() == "black"){
+					this.board[i][k].getPiece().getPlayer().toggleTurn();
+					break;
+				}
+			}
+		}	*/
+		this.black.toggleTurn();
+		this.white.toggleTurn();
+	}
 
 	public int[] map(String input){
 		int x, y;
@@ -263,6 +284,16 @@ public class Board {
 	 public Player getPlayer(int x, int y){
 		 return this.board[x][y].getPiece().getPlayer();
 		
+	 }
+	 
+	 public Tile setEmptyTile(String loc){
+		 int[] coordinate = this.map(loc);
+		 return this.board[coordinate[0]][coordinate[1]] = new Tile.EmptyTile(loc); 
+	 }
+	 
+	 public Tile setOccuppiedTile(Piece p, String loc){
+		 int[] coordinate = this.map(loc);
+		 return this.board[coordinate[0]][coordinate[1]] = new Tile.OccupiedTile(loc, p);
 	 }
 	 
 
