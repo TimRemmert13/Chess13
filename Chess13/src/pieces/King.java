@@ -11,7 +11,57 @@ public class King extends Piece{
 	
 	@Override
 	 public boolean validPath(Board board, String s){
-		 return false;
+		int start[] = board.map(s.substring(0, 2));
+		int dest[] = board.map(s.substring(3,5));
+		//case 1: Moving up
+		if(start[1] == dest[1] && start[0] > dest[0]){
+			int x = start[0] - 1;
+			if(dest[0] == x){
+				if(board.emptyCheck(x, start[1])){
+					return true;
+				}
+				else if(board.getPiece(x, start[1]).getPlayer() != this.getPlayer()){
+					return true;
+				}
+			}
+		}
+		//case 2: Moving down
+		if(start[1] == dest[1] && start[0] < dest[0]){
+			int x = start[0] +1;
+			if(dest[0] == x){
+				if(board.emptyCheck(x, start[1])){
+					return true;
+				}
+				else if(board.getPiece(x, start[1]).getPlayer() != this.getPlayer()){
+					return true;
+				}
+			}
+		}
+		//case 3: Moving to the right
+		if(start[1] < dest[1] && start[0] == dest[0]){
+			int y = start[1] +1;
+			if(dest[1] == y){
+				if(board.emptyCheck(start[0], y)){
+					return true;
+				}
+				else if(board.getPiece(start[0], y).getPlayer() != this.getPlayer()){
+					return true;
+				}
+			}
+		}
+		//case 4: Moving to the left
+		if(start[1] > dest[1] && start[0] == dest[0]){
+			int y = start[1] -1;
+			if(dest[1] == y){
+				if(board.emptyCheck(start[0], y)){
+					return true;
+				}
+				else if(board.getPiece(start[0], y).getPlayer() != this.getPlayer()){
+					return true;
+				}
+			}
+		}
+		return false;
 	 }
 	 @Override
 	 public String toString(){
