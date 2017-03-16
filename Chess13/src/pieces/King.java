@@ -61,6 +61,42 @@ public class King extends Piece{
 				}
 			}
 		}
+		//case 5: moving up and to the right
+		if(dest[0] == start[0]+1 && dest[1] == start[1] +1){
+			if(board.emptyCheck(dest[0], dest[1])){
+				return true;
+			}
+			else if(board.getPiece(dest[0], dest[1]).getPlayer() != this.getPlayer()){
+				return true;
+			}
+		}
+		//case 6: moving up and to the left
+		if(dest[0] == start[0]+1 && dest[1] == start[1] -1){
+			if(board.emptyCheck(dest[0], dest[1])){
+				return true;
+			}
+			else if(board.getPiece(dest[0], dest[1]).getPlayer() != this.getPlayer()){
+				return true;
+			}
+		}
+		//case 7: moving down and to the right
+		if(dest[0] == start[0]-1 && dest[1] == start[1] +1){
+			if(board.emptyCheck(dest[0], dest[1])){
+				return true;
+			}
+			else if(board.getPiece(dest[0], dest[1]).getPlayer() != this.getPlayer()){
+				return true;
+			}
+		}
+		//case 8: moving down and to the left
+		if(dest[0] == start[0]-1 && dest[1] == start[1] -1){
+			if(board.emptyCheck(dest[0], dest[1])){
+				return true;
+			}
+			else if(board.getPiece(dest[0], dest[1]).getPlayer() != this.getPlayer()){
+				return true;
+			}
+		}
 		return false;
 	 }
 	 @Override

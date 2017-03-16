@@ -27,7 +27,7 @@ public class Board {
 		Piece lbN = new Knight("bN", black);
 		Piece lbB = new Bishop("bB", black);
 		Piece bQ = new Queen("bQ", black);
-		Piece bK = new Knight("bK", black);
+		Piece bK = new King("bK", black);
 		Piece rbB = new Bishop("bB", black);
 		Piece rbN = new Knight("bN", black);
 		Piece rbR = new Rook("bR", black);
@@ -45,7 +45,7 @@ public class Board {
 		Piece lwN = new Knight("wN", white);
 		Piece lwB = new Bishop("wB", white);
 		Piece wQ = new Queen("wQ", white);
-		Piece wK = new Knight("wK", white);
+		Piece wK = new King("wK", white);
 		Piece rwB = new Bishop("wB", white);
 		Piece rwN = new Knight("wN", white);
 		Piece rwR = new Rook("wR", white);
@@ -236,23 +236,6 @@ public class Board {
 		return rowsMap;	
 	}
 	public void toogleturns(){
-		/*
-		for(int i = 0; i < 8; i ++){
-			for(int k = 0; k < 8; k++){
-				if(this.board[i][k].getPiece().getPlayer().getColor() == "white"){
-					this.board[i][k].getPiece().getPlayer().toggleTurn();
-					break;
-				}
-			}
-		}
-		for(int i = 0; i < 8; i ++){
-			for(int k = 0; k < 8; k++){
-				if(this.board[i][k].getPiece().getPlayer().getColor() == "black"){
-					this.board[i][k].getPiece().getPlayer().toggleTurn();
-					break;
-				}
-			}
-		}	*/
 		this.black.toggleTurn();
 		this.white.toggleTurn();
 	}
@@ -294,6 +277,434 @@ public class Board {
 	 public Tile setOccuppiedTile(Piece p, String loc){
 		 int[] coordinate = this.map(loc);
 		 return this.board[coordinate[0]][coordinate[1]] = new Tile.OccupiedTile(loc, p);
+	 }
+	 
+	 public boolean findCheck(int x, int y){
+		 //case 1: in check from below
+		 for(int i = x+1; i < 7; i ++){
+			 if(this.board[i][y] == null){
+				 break;
+			 }
+			 if(this.board[i][y].isEmpty()){
+				 continue;
+			 }
+			 if(this.board[i][y].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[i][y].getPiece() instanceof Queen || this.board[i][y].getPiece() instanceof Rook){
+				 return true;
+			 }
+		 }
+		 //case 2: in check from above
+		 for(int i = x-1; i > 0 ; i --){
+			 if(this.board[i][y] == null){
+				 break;
+			 }
+			 if(this.board[i][y].isEmpty()){
+				 continue;
+			 }
+			 if(this.board[i][y].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[i][y].getPiece() instanceof Queen || this.board[i][y].getPiece() instanceof Rook){
+				 return true;
+			 }
+		 }
+		 //case 3: in check from the right
+		 for(int i = y+1; i < 7 ; i ++){
+			 if(this.board[x][i] == null){
+				 break;
+			 }
+			 if(this.board[x][i].isEmpty()){
+				 continue;
+			 }
+			 if(this.board[x][i].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[x][i].getPiece() instanceof Queen || this.board[x][i].getPiece() instanceof Rook){
+				 return true;
+			 }
+		 }
+		 //case 4: in check from the left
+		 for(int i = y-1; i > 0 ; i --){
+			 if(this.board[x][i] == null){
+				 break;
+			 }
+			 if(this.board[x][i].isEmpty()){
+				 continue;
+			 }
+			 if(this.board[x][i].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[x][i].getPiece() instanceof Queen || this.board[x][i].getPiece() instanceof Rook){
+				 return true;
+			 }
+		 }
+		 //case 5: in check from Pawn
+		 //if black King
+		 if(this.board[x][y].getPiece().getPlayer() == this.black){
+			 if(!this.board[x+1][y+1].isEmpty() && this.board[x+1][y+1].getPiece().getPlayer() != this.black){
+				 if(this.board[x+1][y+1].getPiece() instanceof Pawn){
+					 return true;
+				 }
+			 }
+			 if(this.board[x][y].getPiece().getPlayer() == this.black){
+				 if(!this.board[x+1][y-1].isEmpty() && this.board[x+1][y-1].getPiece().getPlayer() != this.black){
+					 if(this.board[x+1][y-1].getPiece() instanceof Pawn){
+						 return true;
+					 }
+				 }
+			 }
+		 }
+		 //if white King
+		 if(this.board[x][y].getPiece().getPlayer() == this.white){
+			 if(this.board[x][y].getPiece().getPlayer() == this.black){
+				 if(!this.board[x-1][y-1].isEmpty() && this.board[x-1][y-1].getPiece().getPlayer() != this.black){
+					 if(this.board[x-1][y-1].getPiece() instanceof Pawn){
+						 return true;
+					 }
+				 }
+			 }
+			 if(this.board[x][y].getPiece().getPlayer() == this.black){
+				 if(!this.board[x-1][y+1].isEmpty() && this.board[x-1][y+1].getPiece().getPlayer() != this.black){
+					 if(this.board[x-1][y+1].getPiece() instanceof Pawn){
+						 return true;
+					 }
+				 }
+			 }
+		 }
+		 //case 6: in check diagonally and up to the left
+		 outerloop:
+			 for(int i = x-1; i > 0 ; i --){
+				 for(int k = y-1; y > 0; y--){
+					 if(this.board[i][k] == null){
+						 break outerloop;
+					 }
+					 if(this.board[i][k].isEmpty()){
+						 continue;
+					 }
+					 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+						 break outerloop;
+					 }
+					 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+						 return true;
+					 }
+				 }
+			 }
+		 //case 7: in check diagonally and up to the right
+		 outerloop:
+			 for(int i = x-1; i > 0 ; i --){
+				 for(int k = y+1; y < 7; y++){
+					 if(this.board[i][k] == null){
+						 break outerloop;
+					 }
+					 if(this.board[i][k].isEmpty()){
+						 continue;
+					 }
+					 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+						 break outerloop;
+					 }
+					 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+						 return true;
+					 }
+				 }
+			 }
+			 //case 8: in check diagonally and down to the left
+			 outerloop:
+				 for(int i = x+1; i < 7 ; i ++){
+					 for(int k = y-1; y > 0; y--){
+						 if(this.board[i][k] == null){
+							 break outerloop;
+						 }
+						 if(this.board[i][k].isEmpty()){
+							 continue;
+						 }
+						 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+							 break outerloop;
+						 }
+						 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+							 return true;
+						 }
+					 }
+				 }
+			 //case 9: in check diagonally and down to the right
+			 outerloop:
+				 for(int i = x+1; i < 7 ; i ++){
+					 for(int k = y+1; y < 7; y++){
+						 if(this.board[i][k] == null){
+							 break outerloop;
+						 }
+						 if(this.board[i][k].isEmpty()){
+							 continue;
+						 }
+						 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+							 break outerloop;
+						 }
+						 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+							 return true;
+						 }
+					 }
+				 }
+				 return false;
+	 }
+	 
+	 public boolean findCheckMate(int[] bK, int[] wK){
+		 boolean checkBelow = false;
+		 boolean checkRight = false;
+		 boolean checkLeft = false;
+		 boolean checkAbove = false;
+		 boolean checkSDL = false;
+		 boolean checkSDR = false;
+		 boolean checkSUL = false;
+		 boolean checkSUR = false;
+		 //check checkmate for black king
+		 if(findCheck(bK[0], bK[1])){
+			 //check below
+			 if(this.board[bK[0]-1][bK[1]] == null){
+				 checkBelow = true;
+			 }
+
+			 else if(!this.board[bK[0]-1][bK[1]].isEmpty()){
+				 if(this.board[bK[0]-1][bK[1]].getPiece().getPlayer() == this.black){
+					 checkBelow = true;
+				 }
+			 }
+			 else if(this.board[bK[0]-1][bK[1]].isEmpty()){
+				 if(findCheck(bK[0]-1, bK[1])){
+					 checkBelow = true;
+				 }
+			 }
+			 //check to the right
+			 if(this.board[bK[0]][bK[1]+1] == null){
+				 checkRight = true;
+			 }
+			 else if(!this.board[bK[0]][bK[1]+1].isEmpty()){
+				 if(this.board[bK[0]][bK[1]+1].getPiece().getPlayer() == this.black){
+					 checkRight = true;
+				 }
+			 }
+			 else if(this.board[bK[0]][bK[1]+1].isEmpty()){
+				 if(findCheck(bK[0], bK[1]+1)){
+					 checkRight = true;
+				 }
+			 }
+			 //check to the left
+			 if(this.board[bK[0]][bK[1]-1] == null){
+				 checkLeft = true;
+			 }
+
+			 else if(!this.board[bK[0]][bK[1]-1].isEmpty()){
+				 if(this.board[bK[0]][bK[1]-1].getPiece().getPlayer() == this.black){
+					 checkLeft = true;
+				 }
+			 }
+			 else if(this.board[bK[0]][bK[1]-1].isEmpty()){
+				 if(findCheck(bK[0], bK[1]-1)){
+					 checkLeft = true;
+				 }
+			 }
+			 //check to the above
+			 if(this.board[bK[0]+1][bK[1]] == null){
+				 checkAbove = true;
+			 }
+
+			 else if(!this.board[bK[0]+1][bK[1]].isEmpty()){
+				 if(this.board[bK[0]+1][bK[1]].getPiece().getPlayer() == this.black){
+					 checkAbove = true;
+				 }
+			 }
+			 else if(this.board[bK[0]+1][bK[1]].isEmpty()){
+				 if(findCheck(bK[0]+1, bK[1])){
+					 checkAbove = true;
+				 }
+			 }
+			 //check to the SDL
+			 if(this.board[bK[0]-1][bK[1]-1] == null){
+				 checkSDL = true;
+			 }
+
+			 else if(!this.board[bK[0]-1][bK[1]-1].isEmpty()){
+				 if(this.board[bK[0]-1][bK[1]-1].getPiece().getPlayer() == this.black){
+					 checkSDL = true;
+				 }
+			 }
+			 else if(this.board[bK[0]-1][bK[1]-1].isEmpty()){
+				 if(findCheck(bK[0]-1, bK[1]-1)){
+					 checkSDL = true;
+				 }
+			 }
+			 //check to the SDR
+			 if(this.board[bK[0]-1][bK[1]+1] == null){
+				 checkSDR = true;
+			 }
+
+			 else if(!this.board[bK[0]-1][bK[1]+1].isEmpty()){
+				 if(this.board[bK[0]-1][bK[1]+1].getPiece().getPlayer() == this.black){
+					 checkSDR = true;
+				 }
+			 }
+			 else if(this.board[bK[0]-1][bK[1]+1].isEmpty()){
+				 if(findCheck(bK[0]-1, bK[1]+1)){
+					 checkSDR = true;
+				 }
+			 }
+		 //check to the SUL
+		 if(this.board[bK[0]+1][bK[1]-1] == null){
+			 checkSUL = true;
+		 }
+
+		 else if(!this.board[bK[0]+1][bK[1]-1].isEmpty()){
+			 if(this.board[bK[0]+1][bK[1]-1].getPiece().getPlayer() == this.black){
+				 checkSUL = true;
+			 }
+		 }
+		 else if(this.board[bK[0]+1][bK[1]-1].isEmpty()){
+			 if(findCheck(bK[0]+1, bK[1]-1)){
+				 checkSUL = true;
+			 }
+		 }
+		 //check SUR
+		 if(this.board[bK[0]+1][bK[1]+1] == null){
+			 checkSUR = true;
+		 }
+
+		 else if(!this.board[bK[0]+1][bK[1]+1].isEmpty()){
+			 if(this.board[bK[0]+1][bK[1]+1].getPiece().getPlayer() == this.black){
+				 checkSUR = true;
+			 }
+		 }
+		 else if(this.board[bK[0]+1][bK[1]+1].isEmpty()){
+			 if(findCheck(bK[0]+1, bK[1]+1)){
+				 checkSUR = true;
+			 }
+		 }
+	 }
+		 if(findCheck(wK[0], wK[1])){
+			 //check below
+			 if(this.board[wK[0]-1][wK[1]] == null){
+				 checkBelow = true;
+			 }
+
+			 else if(!this.board[wK[0]-1][wK[1]].isEmpty()){
+				 if(this.board[wK[0]-1][wK[1]].getPiece().getPlayer() == this.black){
+					 checkBelow = true;
+				 }
+			 }
+			 else if(this.board[wK[0]-1][wK[1]].isEmpty()){
+				 if(findCheck(wK[0]-1, wK[1])){
+					 checkBelow = true;
+				 }
+			 }
+			 //check to the right
+			 if(this.board[wK[0]][wK[1]+1] == null){
+				 checkRight = true;
+			 }
+			 else if(!this.board[wK[0]][wK[1]+1].isEmpty()){
+				 if(this.board[wK[0]][wK[1]+1].getPiece().getPlayer() == this.black){
+					 checkRight = true;
+				 }
+			 }
+			 else if(this.board[wK[0]][wK[1]+1].isEmpty()){
+				 if(findCheck(wK[0], wK[1]+1)){
+					 checkRight = true;
+				 }
+			 }
+			 //check to the left
+			 if(this.board[wK[0]][wK[1]-1] == null){
+				 checkLeft = true;
+			 }
+
+			 else if(!this.board[wK[0]][wK[1]-1].isEmpty()){
+				 if(this.board[wK[0]][wK[1]-1].getPiece().getPlayer() == this.black){
+					 checkLeft = true;
+				 }
+			 }
+			 else if(this.board[wK[0]][wK[1]-1].isEmpty()){
+				 if(findCheck(wK[0], wK[1]-1)){
+					 checkLeft = true;
+				 }
+			 }
+			 //check to the above
+			 if(this.board[wK[0]+1][wK[1]] == null){
+				 checkAbove = true;
+			 }
+
+			 else if(!this.board[wK[0]+1][wK[1]].isEmpty()){
+				 if(this.board[wK[0]+1][wK[1]].getPiece().getPlayer() == this.black){
+					 checkAbove = true;
+				 }
+			 }
+			 else if(this.board[wK[0]+1][wK[1]].isEmpty()){
+				 if(findCheck(wK[0]+1, wK[1])){
+					 checkAbove = true;
+				 }
+			 }
+			 //check to the SDL
+			 if(this.board[wK[0]-1][wK[1]-1] == null){
+				 checkSDL = true;
+			 }
+
+			 else if(!this.board[wK[0]-1][wK[1]-1].isEmpty()){
+				 if(this.board[wK[0]-1][wK[1]-1].getPiece().getPlayer() == this.black){
+					 checkSDL = true;
+				 }
+			 }
+			 else if(this.board[wK[0]-1][wK[1]-1].isEmpty()){
+				 if(findCheck(wK[0]-1, wK[1]-1)){
+					 checkSDL = true;
+				 }
+			 }
+			 //check to the SDR
+			 if(this.board[wK[0]-1][wK[1]+1] == null){
+				 checkSDR = true;
+			 }
+
+			 else if(!this.board[wK[0]-1][wK[1]+1].isEmpty()){
+				 if(this.board[wK[0]-1][wK[1]+1].getPiece().getPlayer() == this.black){
+					 checkSDR = true;
+				 }
+			 }
+			 else if(this.board[wK[0]-1][wK[1]+1].isEmpty()){
+				 if(findCheck(wK[0]-1, wK[1]+1)){
+					 checkSDR = true;
+				 }
+			 }
+		 //check to the SUL
+		 if(this.board[wK[0]+1][wK[1]-1] == null){
+			 checkSUL = true;
+		 }
+
+		 else if(!this.board[wK[0]+1][wK[1]-1].isEmpty()){
+			 if(this.board[wK[0]+1][wK[1]-1].getPiece().getPlayer() == this.black){
+				 checkSUL = true;
+			 }
+		 }
+		 else if(this.board[wK[0]+1][wK[1]-1].isEmpty()){
+			 if(findCheck(wK[0]+1, wK[1]-1)){
+				 checkSUL = true;
+			 }
+		 }
+		 //check SUR
+		 if(this.board[wK[0]+1][wK[1]+1] == null){
+			 checkSUR = true;
+		 }
+
+		 else if(!this.board[wK[0]+1][wK[1]+1].isEmpty()){
+			 if(this.board[wK[0]+1][wK[1]+1].getPiece().getPlayer() == this.black){
+				 checkSUR = true;
+			 }
+		 }
+		 else if(this.board[wK[0]+1][wK[1]+1].isEmpty()){
+			 if(findCheck(wK[0]+1, wK[1]+1)){
+				 checkSUR = true;
+			 }
+		 }
+	 }
+		 if(checkBelow && checkAbove && checkRight && checkLeft &&checkSDL && checkSDR 
+				 && checkSUL && checkSUR){
+			 return true;
+		 }
+		 return false;
 	 }
 	 
 
