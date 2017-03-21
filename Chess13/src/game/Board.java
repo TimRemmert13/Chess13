@@ -485,7 +485,7 @@ public class Board {
 				 return false;
 	 }
 	 
-	 public boolean findCheckMate(int[] bK, int[] wK){
+	 public boolean findCheckMate(int[] bK){
 		 boolean checkBelow = false;
 		 boolean checkRight = false;
 		 boolean checkLeft = false;
@@ -494,256 +494,167 @@ public class Board {
 		 boolean checkSDR = false;
 		 boolean checkSUL = false;
 		 boolean checkSUR = false;
-		 //check checkmate for black king
-		 if(findCheck(bK[0], bK[1])){
-			 //check below
-			 if(this.board[bK[0]-1][bK[1]] == null){
+		 //check below
+		 if(bK[0] == 0){
+			 checkBelow = true;
+		 }
+
+		 else if(!this.board[bK[0]-1][bK[1]].isEmpty()){
+			 if(this.board[bK[0]-1][bK[1]].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkBelow = true;
 			 }
-
-			 else if(!this.board[bK[0]-1][bK[1]].isEmpty()){
-				 if(this.board[bK[0]-1][bK[1]].getPiece().getPlayer() == this.black){
-					 checkBelow = true;
-				 }
+		 }
+		 else if(this.board[bK[0]-1][bK[1]].isEmpty()){
+			 this.board[bK[0]-1][bK[1]] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 if(findCheck(bK[0]-1, bK[1])){
+				 checkBelow = true;
+				 this.board[bK[0]-1][bK[1]] = new Tile.EmptyTile("");
 			 }
-			 else if(this.board[bK[0]-1][bK[1]].isEmpty()){
-				 if(findCheck(bK[0]-1, bK[1])){
-					 checkBelow = true;
-				 }
+			 else{
+				 this.board[bK[0]-1][bK[1]] = new Tile.EmptyTile("");
 			 }
-			 //check to the right
-			 if(this.board[bK[0]][bK[1]+1] == null){
+		 }
+		 //check to the right
+		 if(bK[1] == 7){
+			 checkRight = true;
+		 }
+		 else if(!this.board[bK[0]][bK[1]+1].isEmpty()){
+			 if(this.board[bK[0]][bK[1]+1].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkRight = true;
 			 }
-			 else if(!this.board[bK[0]][bK[1]+1].isEmpty()){
-				 if(this.board[bK[0]][bK[1]+1].getPiece().getPlayer() == this.black){
-					 checkRight = true;
-				 }
+		 }
+		 else if(this.board[bK[0]][bK[1]+1].isEmpty()){
+			 this.board[bK[0]][bK[1]+1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 if(findCheck(bK[0], bK[1]+1)){
+				 checkRight = true;
+				 this.board[bK[0]][bK[1]+1] = new Tile.EmptyTile("");
 			 }
-			 else if(this.board[bK[0]][bK[1]+1].isEmpty()){
-				 if(findCheck(bK[0], bK[1]+1)){
-					 checkRight = true;
-				 }
+			 else{
+				 this.board[bK[0]][bK[1]+1] = new Tile.EmptyTile("");
 			 }
-			 //check to the left
-			 if(this.board[bK[0]][bK[1]-1] == null){
+		 }
+		 //check to the left
+		 if(bK[1] == 0){
+			 checkLeft = true;
+		 }
+
+		 else if(!this.board[bK[0]][bK[1]-1].isEmpty()){
+			 if(this.board[bK[0]][bK[1]-1].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkLeft = true;
 			 }
+		 }
+		 else if(this.board[bK[0]][bK[1]-1].isEmpty()){
+			 this.board[bK[0]][bK[1]-1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 if(findCheck(bK[0], bK[1]-1)){
+				 checkLeft = true;
+				 this.board[bK[0]][bK[1]-1] = new Tile.EmptyTile("");
+			 }else{
+				 this.board[bK[0]][bK[1]-1] = new Tile.EmptyTile("");
+			 }
+			 
+		 }
+		 //check to the above
+		 if(bK[0] == 7){
+			 checkAbove = true;
+		 }
 
-			 else if(!this.board[bK[0]][bK[1]-1].isEmpty()){
-				 if(this.board[bK[0]][bK[1]-1].getPiece().getPlayer() == this.black){
-					 checkLeft = true;
-				 }
-			 }
-			 else if(this.board[bK[0]][bK[1]-1].isEmpty()){
-				 if(findCheck(bK[0], bK[1]-1)){
-					 checkLeft = true;
-				 }
-			 }
-			 //check to the above
-			 if(this.board[bK[0]+1][bK[1]] == null){
+		 else if(!this.board[bK[0]+1][bK[1]].isEmpty()){
+			 if(this.board[bK[0]+1][bK[1]].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkAbove = true;
 			 }
+		 }
+		 else if(this.board[bK[0]+1][bK[1]].isEmpty()){
+			 this.board[bK[0]+1][bK[1]] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 if(findCheck(bK[0]+1, bK[1])){
+				 checkAbove = true;
+				 this.board[bK[0]+1][bK[1]] = new Tile.EmptyTile("");
+			 }else{
+				 this.board[bK[0]+1][bK[1]] = new Tile.EmptyTile("");
+			 }
+		 }
+		 //check to the SDL
+		 if(bK[1] == 0 || bK[0] == 0){
+			 checkSDL = true;
+		 }
 
-			 else if(!this.board[bK[0]+1][bK[1]].isEmpty()){
-				 if(this.board[bK[0]+1][bK[1]].getPiece().getPlayer() == this.black){
-					 checkAbove = true;
-				 }
-			 }
-			 else if(this.board[bK[0]+1][bK[1]].isEmpty()){
-				 if(findCheck(bK[0]+1, bK[1])){
-					 checkAbove = true;
-				 }
-			 }
-			 //check to the SDL
-			 if(this.board[bK[0]-1][bK[1]-1] == null){
+		 else if(!this.board[bK[0]-1][bK[1]-1].isEmpty()){
+			 if(this.board[bK[0]-1][bK[1]-1].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkSDL = true;
 			 }
+		 }
+		 else if(this.board[bK[0]-1][bK[1]-1].isEmpty()){
+			 this.board[bK[0]-1][bK[1]-1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 if(findCheck(bK[0]-1, bK[1]-1)){
+				 checkSDL = true;
+				 this.board[bK[0]-1][bK[1]-1] = new Tile.EmptyTile("");
+			 }else{
+				 this.board[bK[0]-1][bK[1]-1] = new Tile.EmptyTile("");
+			 }
+		 }
+		 //check to the SDR
+		 if(bK[0] == 0 || bK[1] == 7){
+			 checkSDR = true;
+		 }
 
-			 else if(!this.board[bK[0]-1][bK[1]-1].isEmpty()){
-				 if(this.board[bK[0]-1][bK[1]-1].getPiece().getPlayer() == this.black){
-					 checkSDL = true;
-				 }
-			 }
-			 else if(this.board[bK[0]-1][bK[1]-1].isEmpty()){
-				 if(findCheck(bK[0]-1, bK[1]-1)){
-					 checkSDL = true;
-				 }
-			 }
-			 //check to the SDR
-			 if(this.board[bK[0]-1][bK[1]+1] == null){
+		 else if(!this.board[bK[0]-1][bK[1]+1].isEmpty()){
+			 if(this.board[bK[0]-1][bK[1]+1].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkSDR = true;
 			 }
-
-			 else if(!this.board[bK[0]-1][bK[1]+1].isEmpty()){
-				 if(this.board[bK[0]-1][bK[1]+1].getPiece().getPlayer() == this.black){
-					 checkSDR = true;
-				 }
+		 }
+		 else if(this.board[bK[0]-1][bK[1]+1].isEmpty()){
+			 this.board[bK[0]-1][bK[1]+1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 if(findCheck(bK[0]-1, bK[1]+1)){
+				 checkSDR = true;
+				 this.board[bK[0]-1][bK[1]+1] = new Tile.EmptyTile("");
+			 }else{
+				 this.board[bK[0]-1][bK[1]+1] = new Tile.EmptyTile("");
 			 }
-			 else if(this.board[bK[0]-1][bK[1]+1].isEmpty()){
-				 if(findCheck(bK[0]-1, bK[1]+1)){
-					 checkSDR = true;
-				 }
-			 }
+		 }
 		 //check to the SUL
-		 if(this.board[bK[0]+1][bK[1]-1] == null){
+		 if(bK[0] == 7 || bK[1] == 0){
 			 checkSUL = true;
 		 }
 
 		 else if(!this.board[bK[0]+1][bK[1]-1].isEmpty()){
-			 if(this.board[bK[0]+1][bK[1]-1].getPiece().getPlayer() == this.black){
+			 if(this.board[bK[0]+1][bK[1]-1].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkSUL = true;
 			 }
 		 }
 		 else if(this.board[bK[0]+1][bK[1]-1].isEmpty()){
+			 this.board[bK[0]+1][bK[1]-1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
 			 if(findCheck(bK[0]+1, bK[1]-1)){
 				 checkSUL = true;
+				 this.board[bK[0]+1][bK[1]-1] = new Tile.EmptyTile("");
+			 }else{
+				 this.board[bK[0]+1][bK[1]-1] = new Tile.EmptyTile("");
 			 }
 		 }
 		 //check SUR
-		 if(this.board[bK[0]+1][bK[1]+1] == null){
+		 if(bK[0] == 7 || bK[1] == 7){
 			 checkSUR = true;
 		 }
 
 		 else if(!this.board[bK[0]+1][bK[1]+1].isEmpty()){
-			 if(this.board[bK[0]+1][bK[1]+1].getPiece().getPlayer() == this.black){
+			 if(this.board[bK[0]+1][bK[1]+1].getPiece().getPlayer() == this.board[bK[0]][bK[1]].getPiece().getPlayer()){
 				 checkSUR = true;
 			 }
 		 }
 		 else if(this.board[bK[0]+1][bK[1]+1].isEmpty()){
+			 this.board[bK[0]+1][bK[1]+1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
 			 if(findCheck(bK[0]+1, bK[1]+1)){
 				 checkSUR = true;
+				 this.board[bK[0]+1][bK[1]+1] = new Tile.EmptyTile("");
+			 }else{
+				 this.board[bK[0]+1][bK[1]+1] = new Tile.EmptyTile("");
 			 }
 		 }
-	 }
-		 if(findCheck(wK[0], wK[1])){
-			 //check below
-			 if(this.board[wK[0]-1][wK[1]] == null){
-				 checkBelow = true;
-			 }
-
-			 else if(!this.board[wK[0]-1][wK[1]].isEmpty()){
-				 if(this.board[wK[0]-1][wK[1]].getPiece().getPlayer() == this.black){
-					 checkBelow = true;
-				 }
-			 }
-			 else if(this.board[wK[0]-1][wK[1]].isEmpty()){
-				 if(findCheck(wK[0]-1, wK[1])){
-					 checkBelow = true;
-				 }
-			 }
-			 //check to the right
-			 if(this.board[wK[0]][wK[1]+1] == null){
-				 checkRight = true;
-			 }
-			 else if(!this.board[wK[0]][wK[1]+1].isEmpty()){
-				 if(this.board[wK[0]][wK[1]+1].getPiece().getPlayer() == this.black){
-					 checkRight = true;
-				 }
-			 }
-			 else if(this.board[wK[0]][wK[1]+1].isEmpty()){
-				 if(findCheck(wK[0], wK[1]+1)){
-					 checkRight = true;
-				 }
-			 }
-			 //check to the left
-			 if(this.board[wK[0]][wK[1]-1] == null){
-				 checkLeft = true;
-			 }
-
-			 else if(!this.board[wK[0]][wK[1]-1].isEmpty()){
-				 if(this.board[wK[0]][wK[1]-1].getPiece().getPlayer() == this.black){
-					 checkLeft = true;
-				 }
-			 }
-			 else if(this.board[wK[0]][wK[1]-1].isEmpty()){
-				 if(findCheck(wK[0], wK[1]-1)){
-					 checkLeft = true;
-				 }
-			 }
-			 //check to the above
-			 if(this.board[wK[0]+1][wK[1]] == null){
-				 checkAbove = true;
-			 }
-
-			 else if(!this.board[wK[0]+1][wK[1]].isEmpty()){
-				 if(this.board[wK[0]+1][wK[1]].getPiece().getPlayer() == this.black){
-					 checkAbove = true;
-				 }
-			 }
-			 else if(this.board[wK[0]+1][wK[1]].isEmpty()){
-				 if(findCheck(wK[0]+1, wK[1])){
-					 checkAbove = true;
-				 }
-			 }
-			 //check to the SDL
-			 if(this.board[wK[0]-1][wK[1]-1] == null){
-				 checkSDL = true;
-			 }
-
-			 else if(!this.board[wK[0]-1][wK[1]-1].isEmpty()){
-				 if(this.board[wK[0]-1][wK[1]-1].getPiece().getPlayer() == this.black){
-					 checkSDL = true;
-				 }
-			 }
-			 else if(this.board[wK[0]-1][wK[1]-1].isEmpty()){
-				 if(findCheck(wK[0]-1, wK[1]-1)){
-					 checkSDL = true;
-				 }
-			 }
-			 //check to the SDR
-			 if(this.board[wK[0]-1][wK[1]+1] == null){
-				 checkSDR = true;
-			 }
-
-			 else if(!this.board[wK[0]-1][wK[1]+1].isEmpty()){
-				 if(this.board[wK[0]-1][wK[1]+1].getPiece().getPlayer() == this.black){
-					 checkSDR = true;
-				 }
-			 }
-			 else if(this.board[wK[0]-1][wK[1]+1].isEmpty()){
-				 if(findCheck(wK[0]-1, wK[1]+1)){
-					 checkSDR = true;
-				 }
-			 }
-		 //check to the SUL
-		 if(this.board[wK[0]+1][wK[1]-1] == null){
-			 checkSUL = true;
-		 }
-
-		 else if(!this.board[wK[0]+1][wK[1]-1].isEmpty()){
-			 if(this.board[wK[0]+1][wK[1]-1].getPiece().getPlayer() == this.black){
-				 checkSUL = true;
-			 }
-		 }
-		 else if(this.board[wK[0]+1][wK[1]-1].isEmpty()){
-			 if(findCheck(wK[0]+1, wK[1]-1)){
-				 checkSUL = true;
-			 }
-		 }
-		 //check SUR
-		 if(this.board[wK[0]+1][wK[1]+1] == null){
-			 checkSUR = true;
-		 }
-
-		 else if(!this.board[wK[0]+1][wK[1]+1].isEmpty()){
-			 if(this.board[wK[0]+1][wK[1]+1].getPiece().getPlayer() == this.black){
-				 checkSUR = true;
-			 }
-		 }
-		 else if(this.board[wK[0]+1][wK[1]+1].isEmpty()){
-			 if(findCheck(wK[0]+1, wK[1]+1)){
-				 checkSUR = true;
-			 }
-		 }
-	 }
 		 if(checkBelow && checkAbove && checkRight && checkLeft &&checkSDL && checkSDR 
 				 && checkSUL && checkSUR){
 			 return true;
 		 }
 		 return false;
 	 }
-	 
+
 
 	public void printBoard(){
 		int row = 8;

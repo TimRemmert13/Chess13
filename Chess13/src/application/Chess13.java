@@ -28,7 +28,7 @@ public class Chess13 {
 			System.out.println();
 			if (wturn){
 				if(gameBoard.findCheck(wK[0], wK[1])){
-					if(gameBoard.findCheckMate(wK, bK)){
+					if(gameBoard.findCheckMate(wK)){
 						System.out.println("Checkmate");
 						System.out.println("Black wins!");
 						break;
@@ -44,7 +44,7 @@ public class Chess13 {
 			}
 			else if(bturn){
 				if(gameBoard.findCheck(bK[0], bK[1])){
-					if(gameBoard.findCheckMate(wK, bK)){
+					if(gameBoard.findCheckMate(bK)){
 						System.out.println("Checkmate");
 						System.out.println("White wins!");
 						break;
@@ -82,6 +82,16 @@ public class Chess13 {
 			if(!(gameBoard.getPiece(piece[0], piece[1]) instanceof King) && inCheck){
 				System.out.println("You are in Check; you can only move your King");
 				System.out.println();
+				if(wturn){
+					wturn = false;
+					bturn = true;
+					continue;
+				}
+				else{
+					wturn = true;
+					bturn = false;
+					continue;
+				}
 			}
 			else{
 				inCheck = false;
