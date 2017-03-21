@@ -23,7 +23,12 @@ public class Pawn extends Piece{
 					}
 				}
 					if(dest[0] == start[0] +2){
-						if(board.emptyCheck(start[0]+1, start[1]) && board.emptyCheck(start[0] +1,  start[1])){
+						if(board.emptyCheck(start[0]+1, start[1]) && board.emptyCheck(start[0] +2,  start[1])){
+							return true;
+						}
+						else if(!board.emptyCheck(start[0]+1, start[1]) && board.getPiece(start[0]+1, start[1]).getPlayer()
+								!= this.getPlayer()){
+							board.setEmptyTile(start[0] +1, start[1]);
 							return true;
 						}
 					}
@@ -55,7 +60,12 @@ public class Pawn extends Piece{
 					}
 				}
 					else if(dest[0] == start[0] -2){
-						if(board.emptyCheck(start[0]-1, start[1]) && board.emptyCheck(start[0] -1,  start[1])){
+						if(board.emptyCheck(start[0]-1, start[1]) && board.emptyCheck(start[0] -2,  start[1])){
+							return true;
+						}
+						else if(!board.emptyCheck(start[0]-1,start[1]) && board.getPiece(start[0] -1, start[1]).getPlayer()
+								!= this.getPlayer()){
+							board.setEmptyTile(start[0]-1, start[1]);
 							return true;
 						}
 					}

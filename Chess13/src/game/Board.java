@@ -273,6 +273,43 @@ public class Board {
 		 int[] coordinate = this.map(loc);
 		 return this.board[coordinate[0]][coordinate[1]] = new Tile.EmptyTile(loc); 
 	 }
+	 public Tile setEmptyTile(int x, int y){
+		 String c = null;
+		 //find column it is in
+		 switch(x){
+		 case 0 : 
+			 c = "a";
+			 break;
+		 case 1 :
+			 c = "b";
+			 break;
+		 case 2 :
+			 c = "c";
+			 break;
+		 case 3 :
+			 c = "d";
+			 break;
+		 case 4 :
+			 c = "e";
+			 break;
+		 case 5 :
+			 c = "f";
+			 break;
+		 case 6:
+			 c = "g";
+			 break;
+		 case 7:
+			 c = "h";
+			 break;
+		 }
+		 if(this.board[x][y].getPiece().getPlayer() == this.black){
+			 return this.board[x][y] = new Tile.EmptyTile(c+"3");
+		 }
+		 if(this.board[x][y].getPiece().getPlayer() == this.white){
+			 return this.board[x][y] = new Tile.EmptyTile(c+"6");
+		 }
+		 return null;
+	 }
 	 
 	 public Tile setOccuppiedTile(Piece p, String loc){
 		 int[] coordinate = this.map(loc);
