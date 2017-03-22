@@ -4,9 +4,19 @@ import game.Player;
 import game.Board;
 
 public class King extends Piece{
+	
+	boolean moved = false;
 	 
 	public King(String name, Player p){
 		super(name, p);
+	}
+	
+	public void setMoved(){
+		this.moved = true;
+	}
+	
+	public boolean getMoved(){
+		return this.moved;
 	}
 	
 	@Override
@@ -97,8 +107,129 @@ public class King extends Piece{
 				return true;
 			}
 		}
+		//case 9: castling request
+		if(dest[1] == start[1] +2 || dest[1] == start[1]-2){
+			if(!board.findCheck(start[0], start[1])){
+				//for black King
+				if(start[0] == 0 && start[1] == 4 && this.moved == false){
+					//check moving to the right 
+					//check if the tiles are empty
+					if(board.emptyCheck(0, 5) && board.emptyCheck(0, 6)){
+						board.setOccuppiedTile(board.getPiece(start[1], start[0]), "g8");
+						if(!board.findCheck(0, 6)){
+							if(!board.emptyCheck(0, 7)){
+								if(board.getPiece(0, 7) instanceof Rook){
+									if(board.getPiece(0, 7).getMoved() == false){
+										board.setOccuppiedTile(board.getPiece(0, 7), "f8");
+										board.setEmptyTile(0, 7);
+										return true;
+									}
+									else{
+										board.setEmptyTile("g8");
+									}
+								}
+								else{
+									board.setEmptyTile("g8");
+								}
+							}
+							else{
+								board.setEmptyTile("g8");
+							}
+						}
+						else{
+							board.setEmptyTile("g8");
+						}
+					}
+					//check moving to the left
+					if(board.emptyCheck(0, 3) && board.emptyCheck(0, 2) && board.emptyCheck(0, 1)){
+						board.setOccuppiedTile(board.getPiece(start[1], start[0]), "c8");
+						if(!board.findCheck(0, 2)){
+							if(!board.emptyCheck(0, 0)){
+								if(board.getPiece(0, 0) instanceof Rook){
+									if(board.getPiece(0, 0).getMoved() == false){
+										board.setOccuppiedTile(board.getPiece(0, 0), "d8");
+										board.setEmptyTile(0, 0);
+										return true;
+									}
+									else{
+										board.setEmptyTile("c8");
+									}
+								}
+								else{
+									board.setEmptyTile("c8");
+								}
+							}
+							else{
+								board.setEmptyTile("c8");
+							}
+						}
+						else{
+							board.setEmptyTile("c8");
+						}
+					}
+				}
+				//for white king
+				if(start[0] == 7 && start[1] == 4 && this.moved == false){
+					//check moving to the right 
+					//check if the tiles are empty
+					if(board.emptyCheck(7, 5) && board.emptyCheck(7, 6)){
+						board.setOccuppiedTile(board.getPiece(start[1], start[0]), "g1");
+						if(!board.findCheck(7, 6)){
+							if(!board.emptyCheck(7, 7)){
+								if(board.getPiece(7, 7) instanceof Rook){
+									if(board.getPiece(7, 7).getMoved() == false){
+										board.setOccuppiedTile(board.getPiece(7, 7), "f1");
+										board.setEmptyTile(7, 7);
+										return true;
+									}
+									else{
+										board.setEmptyTile("g1");
+									}
+								}
+								else{
+									board.setEmptyTile("g1");
+								}
+							}
+							else{
+								board.setEmptyTile("g1");
+							}
+						}
+						else{
+							board.setEmptyTile("g1");
+						}
+					}
+					//check moving to the left
+					if(board.emptyCheck(7, 3) && board.emptyCheck(7, 2) && board.emptyCheck(7, 1)){
+						board.setOccuppiedTile(board.getPiece(start[1], start[0]), "c1");
+						if(!board.findCheck(7, 2)){
+							if(!board.emptyCheck(7, 0)){
+								if(board.getPiece(7, 0) instanceof Rook){
+									if(board.getPiece(7, 0).getMoved() == false){
+										board.setOccuppiedTile(board.getPiece(7, 0), "d1");
+										board.setEmptyTile(7, 0);
+										return true;
+									}
+									else{
+										board.setEmptyTile("c1");
+									}
+								}
+								else{
+									board.setEmptyTile("c1");
+								}
+							}
+							else{
+								board.setEmptyTile("c1");
+							}
+						}
+						else{
+							board.setEmptyTile("c1");
+						}
+					}
+				}
+			}
+		}
 		return false;
-	 }
+	}
 	 @Override
 	 public String toString(){
 		 return getName();

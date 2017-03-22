@@ -9,6 +9,14 @@ public class Knight extends Piece{
 		super(name, p);
 	}
 	
+	public boolean getMoved(){
+		return false;
+	}
+	
+	public void setMoved(){
+		
+	}
+	
 	@Override
 	 public boolean validPath(Board board,String s){
 		int start[] = board.map(s.substring(0, 2));

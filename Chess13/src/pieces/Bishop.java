@@ -9,6 +9,13 @@ public class Bishop extends Piece {
 		super(name, p);
 	}
 	
+	public boolean getMoved(){
+		return false;
+	}
+	
+	public void setMoved(){
+	}
+	
 	@Override
 	public boolean validPath(Board board, String input){
 		int start[] = board.map(input.substring(0, 2));

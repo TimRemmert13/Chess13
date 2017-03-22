@@ -9,7 +9,12 @@ public class Pawn extends Piece{
 	public Pawn(String name, Player p){
 		super(name, p);
 	}
-	
+	public void setMoved(){
+		
+	}
+	public boolean getMoved(){
+		return false;
+	}
 	@Override
 	 public boolean validPath(Board board, String input){
 		int start[] = board.map(input.substring(0, 2));

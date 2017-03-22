@@ -6,8 +6,18 @@ import game.Tile;
 
 public class Rook extends Piece{
 	
+	boolean moved = false;
+	
 	public Rook(String name, Player p){
 		super(name, p);
+	}
+	
+	public void setMoved(){
+		this.moved = true;
+	}
+	
+	public boolean getMoved(){
+		return this.moved;
 	}
 	
 	@Override

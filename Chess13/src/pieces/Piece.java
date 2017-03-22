@@ -31,6 +31,10 @@ public abstract class Piece {
 		  return this.player;
 	  }
 	  
+	  public abstract boolean getMoved();
+	  
+	  public abstract void setMoved();
+	  
 	  public abstract boolean validPath(Board board, String input);
 	 
 	  

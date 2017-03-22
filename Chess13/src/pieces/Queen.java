@@ -8,6 +8,12 @@ public class Queen extends Piece{
 	public Queen(String name, Player p){
 		super(name, p);
 	}
+	public void setMoved(){
+		
+	}
+	public boolean getMoved(){
+		return false;
+	}
 	@Override
 	public boolean validPath(Board board,String s){
 		int start[] = board.map(s.substring(0, 2));

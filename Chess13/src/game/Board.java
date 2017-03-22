@@ -275,6 +275,7 @@ public class Board {
 	 }
 	 public Tile setEmptyTile(int x, int y){
 		 String c = null;
+		 String z = null;
 		 //find column it is in
 		 switch(x){
 		 case 0 : 
@@ -302,18 +303,97 @@ public class Board {
 			 c = "h";
 			 break;
 		 }
-		 if(this.board[x][y].getPiece().getPlayer() == this.black){
-			 return this.board[x][y] = new Tile.EmptyTile(c+"3");
+		 switch(y){
+		 case 0 : 
+			 z = "8";
+			 break;
+		 case 1 :
+			 z = "7";
+			 break;
+		 case 2 :
+			 z = "6";
+			 break;
+		 case 3 :
+			 z = "5";
+			 break;
+		 case 4 :
+			 z = "4";
+			 break;
+		 case 5 :
+			 z = "3";
+			 break;
+		 case 6:
+			 z = "2";
+			 break;
+		 case 7:
+			 z = "1";
+			 break;
 		 }
-		 if(this.board[x][y].getPiece().getPlayer() == this.white){
-			 return this.board[x][y] = new Tile.EmptyTile(c+"6");
-		 }
-		 return null;
+			 return this.board[x][y] = new Tile.EmptyTile(c+z);
 	 }
 	 
 	 public Tile setOccuppiedTile(Piece p, String loc){
 		 int[] coordinate = this.map(loc);
 		 return this.board[coordinate[0]][coordinate[1]] = new Tile.OccupiedTile(loc, p);
+	 }
+	 
+	 public Tile setOccuppiedTile(Piece p, int x, int y){
+		 String c = null;
+		 String z = null;
+		 //find column it is in
+		 switch(x){
+		 case 0 : 
+			 c = "a";
+			 break;
+		 case 1 :
+			 c = "b";
+			 break;
+		 case 2 :
+			 c = "c";
+			 break;
+		 case 3 :
+			 c = "d";
+			 break;
+		 case 4 :
+			 c = "e";
+			 break;
+		 case 5 :
+			 c = "f";
+			 break;
+		 case 6:
+			 c = "g";
+			 break;
+		 case 7:
+			 c = "h";
+			 break;
+		 }
+		 switch(y){
+		 case 0 : 
+			 z = "8";
+			 break;
+		 case 1 :
+			 z = "7";
+			 break;
+		 case 2 :
+			 z = "6";
+			 break;
+		 case 3 :
+			 z = "5";
+			 break;
+		 case 4 :
+			 z = "4";
+			 break;
+		 case 5 :
+			 z = "3";
+			 break;
+		 case 6:
+			 z = "2";
+			 break;
+		 case 7:
+			 z = "1";
+			 break;
+		 }
+			 return this.board[x][y] = new Tile.OccupiedTile(c+z, p);
 	 }
 	 
 	 public boolean findCheck(int x, int y){
@@ -505,13 +585,13 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]-1][bK[1]].isEmpty()){
-			 this.board[bK[0]-1][bK[1]] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]-1][bK[1]] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0]-1, bK[1]);
 			 if(findCheck(bK[0]-1, bK[1])){
 				 checkBelow = true;
-				 this.board[bK[0]-1][bK[1]] = new Tile.EmptyTile("");
+				 this.board[bK[0]-1][bK[1]] = this.setEmptyTile(bK[0]-1, bK[1]);
 			 }
 			 else{
-				 this.board[bK[0]-1][bK[1]] = new Tile.EmptyTile("");
+				 this.board[bK[0]-1][bK[1]] = this.setEmptyTile(bK[0]-1, bK[1]);
 			 }
 		 }
 		 //check to the right
@@ -524,13 +604,14 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]][bK[1]+1].isEmpty()){
-			 this.board[bK[0]][bK[1]+1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]][bK[1]+1] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0], bK[1]+1);
 			 if(findCheck(bK[0], bK[1]+1)){
 				 checkRight = true;
-				 this.board[bK[0]][bK[1]+1] = new Tile.EmptyTile("");
+				 this.board[bK[0]][bK[1]+1] = this.setEmptyTile(bK[0], bK[1]+1);
+
 			 }
 			 else{
-				 this.board[bK[0]][bK[1]+1] = new Tile.EmptyTile("");
+				 this.board[bK[0]][bK[1]+1] = this.setEmptyTile(bK[0], bK[1]+1);
 			 }
 		 }
 		 //check to the left
@@ -544,12 +625,12 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]][bK[1]-1].isEmpty()){
-			 this.board[bK[0]][bK[1]-1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]][bK[1]-1] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0], bK[1]-1);
 			 if(findCheck(bK[0], bK[1]-1)){
 				 checkLeft = true;
-				 this.board[bK[0]][bK[1]-1] = new Tile.EmptyTile("");
+				 this.board[bK[0]][bK[1]-1] = this.setEmptyTile(bK[0], bK[1]-1);
 			 }else{
-				 this.board[bK[0]][bK[1]-1] = new Tile.EmptyTile("");
+				 this.board[bK[0]][bK[1]-1] = this.setEmptyTile(bK[0], bK[1]-1);
 			 }
 			 
 		 }
@@ -564,12 +645,12 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]+1][bK[1]].isEmpty()){
-			 this.board[bK[0]+1][bK[1]] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]+1][bK[1]] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0]+1, bK[1]);
 			 if(findCheck(bK[0]+1, bK[1])){
 				 checkAbove = true;
-				 this.board[bK[0]+1][bK[1]] = new Tile.EmptyTile("");
+				 this.board[bK[0]+1][bK[1]] = this.setEmptyTile(bK[0]+1, bK[1]);
 			 }else{
-				 this.board[bK[0]+1][bK[1]] = new Tile.EmptyTile("");
+				 this.board[bK[0]+1][bK[1]] = this.setEmptyTile(bK[0]+1, bK[1]);
 			 }
 		 }
 		 //check to the SDL
@@ -583,12 +664,12 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]-1][bK[1]-1].isEmpty()){
-			 this.board[bK[0]-1][bK[1]-1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]-1][bK[1]-1] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0]-1, bK[1]-1);
 			 if(findCheck(bK[0]-1, bK[1]-1)){
 				 checkSDL = true;
-				 this.board[bK[0]-1][bK[1]-1] = new Tile.EmptyTile("");
+				 this.board[bK[0]-1][bK[1]-1] = this.setEmptyTile(bK[0]-1, bK[1]-1);
 			 }else{
-				 this.board[bK[0]-1][bK[1]-1] = new Tile.EmptyTile("");
+				 this.board[bK[0]-1][bK[1]-1] = this.setEmptyTile(bK[0]-1, bK[1]-1);
 			 }
 		 }
 		 //check to the SDR
@@ -602,12 +683,12 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]-1][bK[1]+1].isEmpty()){
-			 this.board[bK[0]-1][bK[1]+1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]-1][bK[1]+1] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0]-1, bK[1]+1);
 			 if(findCheck(bK[0]-1, bK[1]+1)){
 				 checkSDR = true;
-				 this.board[bK[0]-1][bK[1]+1] = new Tile.EmptyTile("");
+				 this.board[bK[0]-1][bK[1]+1] = this.setEmptyTile(bK[0]-1, bK[1]+1);
 			 }else{
-				 this.board[bK[0]-1][bK[1]+1] = new Tile.EmptyTile("");
+				 this.board[bK[0]-1][bK[1]+1] = this.setEmptyTile(bK[0]-1, bK[1]+1);
 			 }
 		 }
 		 //check to the SUL
@@ -621,12 +702,12 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]+1][bK[1]-1].isEmpty()){
-			 this.board[bK[0]+1][bK[1]-1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]+1][bK[1]-1] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0]+1, bK[1]-1);
 			 if(findCheck(bK[0]+1, bK[1]-1)){
 				 checkSUL = true;
-				 this.board[bK[0]+1][bK[1]-1] = new Tile.EmptyTile("");
+				 this.board[bK[0]+1][bK[1]-1] = this.setEmptyTile(bK[0]+1, bK[1]-1);
 			 }else{
-				 this.board[bK[0]+1][bK[1]-1] = new Tile.EmptyTile("");
+				 this.board[bK[0]+1][bK[1]-1] = this.setEmptyTile(bK[0]+1, bK[1]-1);
 			 }
 		 }
 		 //check SUR
@@ -640,12 +721,12 @@ public class Board {
 			 }
 		 }
 		 else if(this.board[bK[0]+1][bK[1]+1].isEmpty()){
-			 this.board[bK[0]+1][bK[1]+1] = new Tile.OccupiedTile("", this.board[bK[0]][bK[1]].getPiece());
+			 this.board[bK[0]+1][bK[1]+1] = this.setOccuppiedTile(this.board[bK[0]][bK[1]].getPiece(), bK[0]+1, bK[1]+1);
 			 if(findCheck(bK[0]+1, bK[1]+1)){
 				 checkSUR = true;
-				 this.board[bK[0]+1][bK[1]+1] = new Tile.EmptyTile("");
+				 this.board[bK[0]+1][bK[1]+1] = this.setEmptyTile(bK[0]+1, bK[1]+1);
 			 }else{
-				 this.board[bK[0]+1][bK[1]+1] = new Tile.EmptyTile("");
+				 this.board[bK[0]+1][bK[1]+1] = this.setEmptyTile(bK[0]+1, bK[1]+1);
 			 }
 		 }
 		 if(checkBelow && checkAbove && checkRight && checkLeft &&checkSDL && checkSDR 
