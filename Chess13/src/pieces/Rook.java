@@ -3,23 +3,43 @@ package pieces;
 import game.Board;
 import game.Player;
 import game.Tile;
-
+/** 
+ * Class to represent the Rook piece in a game of chess
+ * @author Tim Remmert
+ *
+ */
 public class Rook extends Piece{
-	
+	/**
+	 * value to determine if the piece has moved yet 
+	 * in the game
+	 */
 	boolean moved = false;
-	
+	/**
+	 * Initializes the Rook to have the given string as it's name
+	 * and the player it belongs to.
+	 * @param name
+	 * @param p
+	 */
 	public Rook(String name, Player p){
 		super(name, p);
 	}
-	
+	/**
+	 * Method to set the boolean value moved.
+	 * This will always set the value to true.
+	 */
 	public void setMoved(){
 		this.moved = true;
 	}
-	
+	/**
+	 * Method to return the current value of boolean field moved
+	 */
 	public boolean getMoved(){
 		return this.moved;
 	}
-	
+	/**
+	 * Method to determine if the users requested move is a valid move for the Rook piece according 
+	 * to the rules of chess for Rook movements
+	 */
 	@Override
 	 public boolean validPath(Board board,String s){
 		int start[] = board.map(s.substring(0, 2));
@@ -138,7 +158,9 @@ public class Rook extends Piece{
 		}
 		return false;
 	}
-	
+	/**
+	 * Method to return bR for black's rook or wR for white's rook.
+	 */
 	 @Override
 	 public String toString(){
 		 return getName();

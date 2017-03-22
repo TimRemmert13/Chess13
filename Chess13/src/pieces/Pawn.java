@@ -3,18 +3,39 @@ package pieces;
 import game.Player;
 import game.Board;
 import game.Tile;
-
+/**
+ * Class to represent the Pawn piece in a game of chess
+ * @author Tim Remmert
+ *
+ */
 public class Pawn extends Piece{
-	
+	/**
+	 * Initializes a pawn piece with the given string as a name 
+	 * and the player it belongs to.
+	 * @param name
+	 * @param p
+	 */
 	public Pawn(String name, Player p){
 		super(name, p);
 	}
+	/**
+	 * Method to set the boolean moved value of the piece
+	 */
 	public void setMoved(){
 		
 	}
+	/**
+	 * Method to get the current moved value for the piece.
+	 * This will always return false because we are not concerned with if the 
+	 * pawn has moved yet in the game.
+	 */
 	public boolean getMoved(){
 		return false;
 	}
+	/**
+	 * Method to determine if the users requested move is a valid move for the pawn piece 
+	 * according to the rules of chess for a pawns movement.
+	 */
 	@Override
 	 public boolean validPath(Board board, String input){
 		int start[] = board.map(input.substring(0, 2));
@@ -91,7 +112,9 @@ public class Pawn extends Piece{
 		}
 		return false; 
 	 }
-	
+	/**
+	 * Method returns either bp for black's pawn or wp for whites pawn
+	 */
 	 @Override
 	 public String toString(){
 		 return getName();

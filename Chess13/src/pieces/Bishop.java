@@ -3,19 +3,38 @@ package pieces;
 import game.Player;
 import game.Board; 
 import game.Tile;
-
+/**
+ * Class to represent the Bishop piece in a game of chess
+ * @author Tim Remmert
+ *
+ */
 public class Bishop extends Piece {
+	/**
+	 * Initializes the piece with the given String for it's name
+	 * and Player for its Player
+	 * @param name 
+	 * @param p
+	 */
 	public Bishop(String name, Player p){
 		super(name, p);
 	}
-	
+	/**
+	 * Method to get the value currently for boolean moved.
+	 * This always returns false because we are not concerned with if the bishop
+	 * has moved yet in the game.
+	 */
 	public boolean getMoved(){
 		return false;
 	}
-	
+	/**
+	 * Method to set boolean moved to a value.
+	 */
 	public void setMoved(){
 	}
-	
+	/**
+	 * ValidPath for bishop checks to see if the users requested move 
+	 * follows the rules in chess for a bishop's piece possible movements
+	 */
 	@Override
 	public boolean validPath(Board board, String input){
 		int start[] = board.map(input.substring(0, 2));
@@ -142,8 +161,11 @@ public class Bishop extends Piece {
 		}
 	return false;
 	 }
-
-	 @Override
+/**
+ * Method to return either bB for black's bishop or
+ * wB for whites bishop
+ */
+     @Override
 	 public String toString(){
 		 return getName();
 	 }

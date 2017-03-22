@@ -3,17 +3,39 @@ package pieces;
 import game.Board;
 import game.Player;
 import game.Tile;
-
+/**
+ * Class to represent the Queen piece in a game of chess
+ * @author Tim Remmert
+ *
+ */
 public class Queen extends Piece{
+	/**
+	 * Initializes the piece to have the given string name and
+	 * which player it belongs to.
+	 * @param name
+	 * @param p
+	 */
 	public Queen(String name, Player p){
 		super(name, p);
 	}
+	/**
+	 * Method to set the boolean value moved.
+	 */
 	public void setMoved(){
 		
 	}
+	/**
+	 * Method to get the current boolean value for moved.
+	 * This will always return false because we are not concerned with if the
+	 * queen has moved yet in the game
+	 */
 	public boolean getMoved(){
 		return false;
 	}
+	/**
+	 * Method to determine is the users requested move is a valid move for a queen piece
+	 * according to the rules of chess for queen movements.
+	 */
 	@Override
 	public boolean validPath(Board board,String s){
 		int start[] = board.map(s.substring(0, 2));
@@ -252,7 +274,9 @@ public class Queen extends Piece{
 		}
 		return false;
 	}
-	 
+	 /**
+	  * Method return wQ for white's queen and bQ for blacks queen
+	  */
 	 @Override
 	 public String toString(){
 		 return getName();

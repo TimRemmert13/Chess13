@@ -3,20 +3,39 @@ package pieces;
 import game.Board;
 import game.Player;
 import game.Tile;
-
+/**
+ * Class to represent the knight piece in a game of chess
+ * @author Tim Remmert
+ *
+ */
 public class Knight extends Piece{
+	/**
+	 * Initializes a Knight piece the given String for a name
+	 * and the Player it belongs to
+	 * @param name
+	 * @param p
+	 */
 	public Knight(String name, Player p){
 		super(name, p);
 	}
-	
+	/**
+	 * Method to get boolean moved value.
+	 * This will always return false because we are not concerned if the 
+	 * knight piece has moved yet in a game.
+	 */
 	public boolean getMoved(){
 		return false;
 	}
-	
+	/**
+	 * Method to set the boolean moved value
+	 */
 	public void setMoved(){
 		
 	}
-	
+	/**
+	 * Checks to see if the users requested move is a valid move for a
+	 * knight piece according to the rules of chess.
+	 */
 	@Override
 	 public boolean validPath(Board board,String s){
 		int start[] = board.map(s.substring(0, 2));
@@ -95,7 +114,10 @@ public class Knight extends Piece{
 		}
 		return false;
 	}
-	 
+	 /**
+	  * Method to return either bN for black's knight or 
+	  * wN for white's knight
+	  */
 	 @Override
 	 public String toString(){
 		 return getName();

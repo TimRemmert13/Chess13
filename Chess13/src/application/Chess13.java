@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import game.*;
 import pieces.*;
-
+/**
+ * Class to run the game of chess where players moves are process and a winner or draw is 
+ * determined.
+ * @author Tim Remmert
+ *
+ */
 public class Chess13 {
-
 	public static void main(String[] args)
 			throws IOException {
 		//create buffer reader to read players input
@@ -50,7 +54,7 @@ public class Chess13 {
 				if(gameBoard.findCheck(bK[0], bK[1])){
 					if(gameBoard.findCheckMate(bK)){
 						System.out.println("Checkmate");
-						System.out.println("White wins!");
+						System.out.println("White wins");
 						break;
 					}else{
 						System.out.println("Check");
@@ -65,7 +69,7 @@ public class Chess13 {
 			
 			String move = br.readLine();
 			if(move.equals("resign")&&bturn==false){
-				System.out.println("White wins!");
+				System.out.println("White wins");
 				break;
 			}else if(move.equals("resign")&&bturn==true){
 				System.out.println("Black wins!");
@@ -96,6 +100,17 @@ public class Chess13 {
 			
 			if(gameBoard.getPiece(piece[0], piece[1]).validPath(gameBoard, move)){
 				int dest[] = gameBoard.map(move.substring(3, 5));
+				Piece temp = gameBoard.getPiece(dest[0], dest[1]);
+				boolean empty = false;
+				if(gameBoard.emptyCheck(dest[0], dest[1])){
+					empty = true;
+				}
+				if(gameBoard.getPiece(piece[0], piece[1]) instanceof King){
+					gameBoard.getPiece(piece[0], piece[1]).setMoved();
+				}
+				if(gameBoard.getPiece(piece[0], piece[1]) instanceof Rook){
+					gameBoard.getPiece(piece[0], piece[1]).setMoved();
+				}
 				gameBoard.setOccuppiedTile(gameBoard.getPiece(piece[0], piece[1]), move.substring(3,5));
 				gameBoard.setEmptyTile(move.substring(0,2));
 				if(piece[0] == wK[0] && piece[1] == wK[1]){
@@ -104,16 +119,9 @@ public class Chess13 {
 				if(piece[0] == bK[0] && piece[1] == bK[1]){
 					bK = gameBoard.map(move.substring(3,5));
 				}
-				if(gameBoard.getPiece(piece[0], piece[1]) instanceof King){
-					gameBoard.getPiece(piece[0], piece[1]).setMoved();
-				}
-				if(gameBoard.getPiece(piece[0], piece[1]) instanceof Rook){
-					gameBoard.getPiece(piece[0], piece[1]).setMoved();
-				}
 				if(bCheck){
 					boolean bkingmov = false;
 					boolean wkingmov = false;
-					Piece temp = gameBoard.getPiece(dest[0], dest[1]);
 					if(piece[0] == wK[0] && piece[1] == wK[1]){
 						wK = gameBoard.map(move.substring(3,5));
 						wkingmov = true;
@@ -124,11 +132,11 @@ public class Chess13 {
 					}
 					if(gameBoard.findCheck(bK[0], bK[1])){
 						gameBoard.setOccuppiedTile(gameBoard.getPiece(dest[0], dest[1]), move.substring(0,2));
-						if(temp == null){
-							gameBoard.setEmptyTile(move.substring(3,5));
+						if(empty){
+							gameBoard.setEmptyTile(dest[0], dest[1]);
 						}
 						else{
-							gameBoard.setOccuppiedTile(temp, move.substring(3,5));
+							gameBoard.setOccuppiedTile(temp, dest[0], dest[1]);
 						}
 						if(wkingmov){
 							wK = dest;
@@ -156,7 +164,6 @@ public class Chess13 {
 				if(wCheck){
 					boolean bkingmov = false;
 					boolean wkingmov = false;
-					Piece temp = gameBoard.getPiece(dest[0], dest[1]);
 					if(piece[0] == wK[0] && piece[1] == wK[1]){
 						wK = gameBoard.map(move.substring(3,5));
 						wkingmov = true;
@@ -167,7 +174,7 @@ public class Chess13 {
 					}
 					if(gameBoard.findCheck(wK[0], wK[1])){
 						gameBoard.setOccuppiedTile(gameBoard.getPiece(dest[0], dest[1]), move.substring(0,2));
-						if(temp == null){
+						if(empty){
 							gameBoard.setEmptyTile(move.substring(3,5));
 						}
 						else{

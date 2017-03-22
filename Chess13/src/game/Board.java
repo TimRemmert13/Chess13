@@ -5,20 +5,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pieces.*;
-
+/** 
+ * Class to represent the board of a chess game.
+ * @author Tim Remmert
+ *
+ */
 public class Board {
-	
+	/**
+	 * This is a 8x8 2D array of tiles to represent the actual 
+	 * board the game is played on
+	 */
     Tile[][] board;
-    
+    /**
+     * A hash map to translate a tiles String coordinate second value
+     * to the integer value of its column in the 2D array 
+     */
     private static final Map<Character,Integer> columns = buildColumnsMap();
-    
+    /**
+     * A hash map to translate a tiles string coordinate first value to
+     * the integer value of its row in the 2D array
+     */
     private static final Map<Character,Integer> rows = buildRowsMap();
-    
+    /**
+     * The player with the black pieces
+     */
     final Player black = new Player("black");
-    
+    /**
+     * The player with the with pieces
+     */
 	final Player white = new Player("white");
     
-	
+	/**
+	 * initializes the board to the starting position of all pieces 
+	 * @param x This is the number of rows and it will always be 8
+	 * @param y This is the number of columns and it will always be 8
+	 */
 	public Board(int x, int y){
 		this.board = new Tile[x][y];
 		
@@ -206,7 +227,11 @@ public class Board {
 			this.board[7][7] = h1;	
 			
 	}
-	
+	/**
+	 * Method to build the hash map for mapping a string to its column location
+	 * in the board.
+	 * @return
+	 */
 	private static Map<Character, Integer> buildColumnsMap(){
 		 Map<Character,Integer> columnsmap = new HashMap<Character, Integer>();
 		//initialize maps 
@@ -221,7 +246,11 @@ public class Board {
 		columnsmap.put('h', 7);
 		return columnsmap;
 	}
-	
+	/**
+	 * Method to build the hash map for mapping a string to its row location 
+	 * in the board
+	 * @return
+	 */
 	private static Map<Character,Integer> buildRowsMap(){
 		Map<Character,Integer> rowsMap = new HashMap<Character, Integer>();
 		//rows
@@ -235,11 +264,19 @@ public class Board {
 		rowsMap.put('1',7);	
 		return rowsMap;	
 	}
+	/**
+	 * Method to end one players turn and begin another's
+	 */
 	public void toogleturns(){
 		this.black.toggleTurn();
 		this.white.toggleTurn();
 	}
-
+/**
+ * Method to map a two letter string to its location in the board
+ * @param input This is the string location of the tile
+ * @return This is an integer array with the first number being the row location
+ * and the second number being the column location
+ */
 	public int[] map(String input){
 		int x, y;
 		char column = input.charAt(0);
@@ -250,7 +287,13 @@ public class Board {
 		return arr;
 		
 	}
-	
+	/**
+	 * Method to check if a given on the board has a piece or not
+	 * @param x This is the row location of the board
+	 * @param y This is the column location of the board
+	 * @return Return true if a piece is on the tile, 
+	 *         and false if there is no piece on the tile.
+	 */
 	public boolean emptyCheck(int x, int y){
 		if(this.board[x][y].isEmpty() == true){
 			return true;
@@ -259,20 +302,40 @@ public class Board {
 			return false;
 		}
 	}
-	
+	/**
+	 * Method to get a piece on a tile
+	 * @param x This is the row location of the tile on the board
+	 * @param y This is the column location of the tile on the board
+	 * @return Returns the piece on the tile at the location requested.
+	 */
 	 public Piece getPiece(int x, int y){
 		 return this.board[x][y].getPiece();
 	 }
-	 
+	 /**
+	  * Method to return the player a given piece on the board belongs to
+	  * @param x This is the row location of the piece
+	  * @param y This is the column location of the piece
+	  * @return Returns the player the piece at the location belongs to
+	  */
 	 public Player getPlayer(int x, int y){
 		 return this.board[x][y].getPiece().getPlayer();
 		
 	 }
-	 
+	 /**
+	  * Method to set a tile of the board to a tile without a piece
+	  * @param loc This is the location of the piece on the board
+	  * @return Returns a new empty tile at the requested location
+	  */
 	 public Tile setEmptyTile(String loc){
 		 int[] coordinate = this.map(loc);
 		 return this.board[coordinate[0]][coordinate[1]] = new Tile.EmptyTile(loc); 
 	 }
+	 /**
+	  * Method to set a tile of the board to a tile without a piece
+	  * @param x This is the row location of the piece
+	  * @param y This is the column location of the piece
+	  * @return Returns a new empty tile at the requested location
+	  */
 	 public Tile setEmptyTile(int x, int y){
 		 String c = null;
 		 String z = null;
@@ -331,12 +394,25 @@ public class Board {
 		 }
 			 return this.board[x][y] = new Tile.EmptyTile(c+z);
 	 }
-	 
+	 /**
+	  * Method to set a tile at a given location to one with the given 
+	  * piece on it.
+	  * @param p This is the piece to be placed on the tile
+	  * @param loc This is the location of the tile
+	  * @return Returns a new tile with the piece on at the requested location
+	  */
 	 public Tile setOccuppiedTile(Piece p, String loc){
 		 int[] coordinate = this.map(loc);
 		 return this.board[coordinate[0]][coordinate[1]] = new Tile.OccupiedTile(loc, p);
 	 }
-	 
+	 /**
+	  * Method to set a tile at a given location to one with the given 
+	  * piece on it.
+	  * @param p This is the piece to be placed on the tile
+	  * @param x This is the row location of the tile on the board
+	  * @param y This is the column location of the tile on the board
+	  * @return Returns a new tile with the piece on at the requested location
+	  */
 	 public Tile setOccuppiedTile(Piece p, int x, int y){
 		 String c = null;
 		 String z = null;
@@ -395,7 +471,13 @@ public class Board {
 		 }
 			 return this.board[x][y] = new Tile.OccupiedTile(c+z, p);
 	 }
-	 
+	 /**
+	  * Method to determine if a players king is in check.
+	  * @param x row location of the player king on the board
+	  * @param y column location of the players king on the board
+	  * @return Returns true if the players king is in check
+	  *         and false if it is not.
+	  */
 	 public boolean findCheck(int x, int y){
 		 //case 1: in check from below
 		 for(int i = x+1; i < 7; i ++){
@@ -491,80 +573,92 @@ public class Board {
 			 }
 		 }
 		 //case 6: in check diagonally and up to the left
-		 outerloop:
-			 for(int i = x-1; i > 0 ; i --){
-				 for(int k = y-1; y > 0; y--){
-					 if(this.board[i][k] == null){
-						 break outerloop;
-					 }
-					 if(this.board[i][k].isEmpty()){
-						 continue;
-					 }
-					 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
-						 break outerloop;
-					 }
-					 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
-						 return true;
-					 }
-				 }
+		 int i = x -1;
+		 int k = y -1;
+		 while(i > 0 && k > 0){
+			 if(this.board[i][k] == null){
+				 break;
 			 }
+			 if(this.board[i][k].isEmpty()){
+				 i --;
+				 k--;
+				 continue;
+			 }
+			 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+				 return true;
+			 }
+		 }
+			 
 		 //case 7: in check diagonally and up to the right
-		 outerloop:
-			 for(int i = x-1; i > 0 ; i --){
-				 for(int k = y+1; y < 7; y++){
-					 if(this.board[i][k] == null){
-						 break outerloop;
-					 }
-					 if(this.board[i][k].isEmpty()){
-						 continue;
-					 }
-					 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
-						 break outerloop;
-					 }
-					 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
-						 return true;
-					 }
-				 }
+		 i = x-1;
+		 k = y+1;
+		 while(i > 0 && k < 7){
+			 if(this.board[i][k] == null){
+				 break;
 			 }
-			 //case 8: in check diagonally and down to the left
-			 outerloop:
-				 for(int i = x+1; i < 7 ; i ++){
-					 for(int k = y-1; y > 0; y--){
-						 if(this.board[i][k] == null){
-							 break outerloop;
-						 }
-						 if(this.board[i][k].isEmpty()){
-							 continue;
-						 }
-						 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
-							 break outerloop;
-						 }
-						 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
-							 return true;
-						 }
-					 }
-				 }
-			 //case 9: in check diagonally and down to the right
-			 outerloop:
-				 for(int i = x+1; i < 7 ; i ++){
-					 for(int k = y+1; y < 7; y++){
-						 if(this.board[i][k] == null){
-							 break outerloop;
-						 }
-						 if(this.board[i][k].isEmpty()){
-							 continue;
-						 }
-						 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
-							 break outerloop;
-						 }
-						 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
-							 return true;
-						 }
-					 }
-				 }
-				 return false;
+			 if(this.board[i][k].isEmpty()){
+				 i --;
+				 k ++;
+				 continue;
+			 }
+			 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+				 return true;
+			 }
+		 }
+		 //case 8: in check diagonally and down to the left
+		 i = x+1;
+		 k = y-1;
+		 while(i < 7 && k > 0 ){
+			 if(this.board[i][k] == null){
+				 break;
+			 }
+			 if(this.board[i][k].isEmpty()){
+				 i ++;
+				 k --;
+				 continue;
+			 }
+			 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+				 return true;
+			 }
+		 }
+		 //case 9: in check diagonally and down to the right
+		 i = x+1;
+		 k = y+1;
+		 while(i < 7 && k < 7){
+			 if(this.board[i][k] == null){
+				 break;
+			 }
+			 if(this.board[i][k].isEmpty()){
+				 i ++;
+				 k ++;
+				 continue;
+			 }
+			 if(this.board[i][k].getPiece().getPlayer() == this.board[x][y].getPiece().getPlayer()){
+				 break;
+			 }
+			 else if(this.board[i][k].getPiece() instanceof Queen || this.board[i][k].getPiece() instanceof Bishop){
+				 return true;
+			 }
+		 }
+		 return false;
 	 }
-	 
+	 /**
+	  * Method to determine if a players king in is check mate
+	  * @param bK This is an integer array with the first value being the row location
+	  * of the king on the board, and the second value being the column location of the king 
+	  * on the board
+	  * @return Returns true if the players king is in check mate
+	  *         and false if it is not
+	  */
 	 public boolean findCheckMate(int[] bK){
 		 boolean checkBelow = false;
 		 boolean checkRight = false;
@@ -736,7 +830,10 @@ public class Board {
 		 return false;
 	 }
 
-
+/**
+ * Method to print to current board according to the assignment guidelines, and the
+ * location of each piece.
+ */
 	public void printBoard(){
 		int row = 8;
 		for(int i = 0; i < 8; i++){
