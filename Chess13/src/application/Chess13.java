@@ -19,13 +19,16 @@ public class Chess13 {
 		boolean checkmate = false;
 		boolean wturn = true;
 		boolean bturn = false;
+		boolean drawSign = false;
 		gameBoard.getPlayer(7, 0).toggleTurn();
 		int[] wK ={7,4};
 		int[] bK ={0,4};
+	
 		
 		while(!checkmate){
 			gameBoard.printBoard();
 			System.out.println();
+			//if()
 			if (wturn){
 				if(gameBoard.findCheck(wK[0], wK[1])){
 					if(gameBoard.findCheckMate(wK)){
@@ -58,7 +61,23 @@ public class Chess13 {
 				wturn = true;
 				bturn = false;
 			}
+			
 			String move = br.readLine();
+			if(move.equals("resign")&&bturn==false){
+				System.out.println("White wins!");
+				break;
+			}else if(move.equals("resign")&&bturn==true){
+				System.out.println("Black wins!");
+				break;
+			}
+			if(drawSign == true && move.equals("draw")){
+				System.out.println("Draw");
+				break;
+			}
+			if(move.length()==11){
+				drawSign = true;
+				move = move.substring(0,5);
+			}
 			int piece[] = gameBoard.map(move);
 			if(piece[0] == wK[0] && piece[1] == wK[1]){
 				wK = gameBoard.map(move.substring(3,5));

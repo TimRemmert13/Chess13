@@ -96,7 +96,7 @@ public class Board {
 			Tile h4 = new Tile.EmptyTile("h4");
 			//row 5
 			Tile a5 = new Tile.EmptyTile("a5");
-			Tile b5 = new Tile.EmptyTile("b5");
+  			Tile b5 = new Tile.EmptyTile("b5");
 			Tile c5 = new Tile.EmptyTile("c5");
 			Tile d5 = new Tile.EmptyTile("d5");
 			Tile e5 = new Tile.EmptyTile("e5");
