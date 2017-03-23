@@ -6,7 +6,7 @@ import game.Tile;
 /**
  * Class to represent the Queen piece in a game of chess
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public class Queen extends Piece{
 	/**

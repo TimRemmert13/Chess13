@@ -9,7 +9,7 @@ import pieces.*;
  * Class to run the game of chess where players moves are process and a winner or draw is 
  * determined.
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public class Chess13 {
 	public static void main(String[] args)

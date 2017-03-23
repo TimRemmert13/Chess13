@@ -4,7 +4,7 @@ import pieces.Piece;
 /**
  * Class to represent a tile of the chess board in a game of chess
  * @author Tim Reemmert
- *
+ * @author Mengyu Gong
  */
 public abstract class Tile {
 	/**

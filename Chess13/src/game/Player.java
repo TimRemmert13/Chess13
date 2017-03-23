@@ -2,7 +2,7 @@ package game;
 /**
  * Class to represent a player in the chess game
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public class Player {
 	/**

@@ -5,7 +5,7 @@ import game.Board;
 /**
  * Class to represent the King piece in a game of chess
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public class King extends Piece{
 	/**

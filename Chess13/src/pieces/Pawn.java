@@ -6,7 +6,7 @@ import game.Tile;
 /**
  * Class to represent the Pawn piece in a game of chess
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public class Pawn extends Piece{
 	/**

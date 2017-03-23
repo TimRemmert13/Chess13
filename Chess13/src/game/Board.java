@@ -8,7 +8,7 @@ import pieces.*;
 /** 
  * Class to represent the board of a chess game.
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public class Board {
 	/**

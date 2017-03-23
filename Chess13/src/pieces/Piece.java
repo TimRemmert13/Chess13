@@ -9,7 +9,7 @@ import game.Board;
  * implemented by other classes that are types of pieces such
  * as King, Queen, etc.
  * @author Tim Remmert
- *
+ * @author Mengyu Gong
  */
 public abstract class Piece {
 	
