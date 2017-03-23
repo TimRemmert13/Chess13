@@ -17,8 +17,8 @@ public class King extends Piece{
 	 /**
 	  * Initializes a King piece with a given String for a name
 	  * to the given player
-	  * @param name
-	  * @param p
+	  * @param name String that appears on the board
+	  * @param p Player the piece belongs to
 	  */
 	public King(String name, Player p){
 		super(name, p);

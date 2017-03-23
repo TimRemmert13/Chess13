@@ -12,8 +12,8 @@ public class Pawn extends Piece{
 	/**
 	 * Initializes a pawn piece with the given string as a name 
 	 * and the player it belongs to.
-	 * @param name
-	 * @param p
+	 * @param name String that appears on the board
+	 * @param p Player the piece belongs to
 	 */
 	public Pawn(String name, Player p){
 		super(name, p);

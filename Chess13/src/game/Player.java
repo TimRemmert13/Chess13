@@ -38,7 +38,7 @@ public class Player {
 	}
 	/**
 	 * Method to see if it is currently the player's turn
-	 * @return
+	 * @return Returns true if its the players turn and false if it is not
 	 */
 	public boolean getTurn(){
 		return this.turn;

@@ -12,9 +12,9 @@ public class Queen extends Piece{
 	/**
 	 * Initializes the piece to have the given string name and
 	 * which player it belongs to.
-	 * @param name
-	 * @param p
-	 */
+	 * @param name String that appears on the board
+	 * @param p Player the piece belongs to
+	 */ 
 	public Queen(String name, Player p){
 		super(name, p);
 	}

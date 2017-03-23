@@ -22,13 +22,13 @@ public abstract class Tile {
 	/**
 	 * Abstract method to return true if a piece is on the tile
 	 * or false if a piece is not on the tile
-	 * @return
+	 * @return return true is the tile has no piece on it and false if it does
 	 */
 	 public abstract boolean isEmpty();
 	 /**
 	  * Abstract Method to return the piece currently on the tile.
 	  * Returns null if there is no piece on the tile.
-	  * @return
+	  * @return Returns the piece on the tile
 	  */
 	 public abstract Piece getPiece();
 	 /**

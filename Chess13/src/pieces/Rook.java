@@ -17,8 +17,8 @@ public class Rook extends Piece{
 	/**
 	 * Initializes the Rook to have the given string as it's name
 	 * and the player it belongs to.
-	 * @param name
-	 * @param p
+	 * @param name String that appears on the board
+	 * @param p Player that the piece belongs to
 	 */
 	public Rook(String name, Player p){
 		super(name, p);

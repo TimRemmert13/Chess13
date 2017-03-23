@@ -83,7 +83,7 @@ public abstract class Piece {
 	   * according to the rules of chess for that given piece
 	   * @param board This is the board the piece is currently playing on
 	   * @param input This is the users requested move for the piece
-	   * @return
+	   * @return Returns true if the move is valid or false if it is not
 	   */
 	  public abstract boolean validPath(Board board, String input);
 	 /**

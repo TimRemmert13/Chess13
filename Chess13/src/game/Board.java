@@ -230,7 +230,7 @@ public class Board {
 	/**
 	 * Method to build the hash map for mapping a string to its column location
 	 * in the board.
-	 * @return
+	 * @return Returns a hash map for mapping a string to its columnn location
 	 */
 	private static Map<Character, Integer> buildColumnsMap(){
 		 Map<Character,Integer> columnsmap = new HashMap<Character, Integer>();
@@ -249,7 +249,7 @@ public class Board {
 	/**
 	 * Method to build the hash map for mapping a string to its row location 
 	 * in the board
-	 * @return
+	 * @return Returns a hash map for mapping a string to its row location
 	 */
 	private static Map<Character,Integer> buildRowsMap(){
 		Map<Character,Integer> rowsMap = new HashMap<Character, Integer>();

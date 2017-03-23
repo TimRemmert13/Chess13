@@ -12,8 +12,8 @@ public class Bishop extends Piece {
 	/**
 	 * Initializes the piece with the given String for it's name
 	 * and Player for its Player
-	 * @param name 
-	 * @param p
+	 * @param name String that appears on the board
+	 * @param p Player the piece belongs to
 	 */
 	public Bishop(String name, Player p){
 		super(name, p);

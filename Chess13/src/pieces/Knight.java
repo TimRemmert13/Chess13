@@ -12,8 +12,8 @@ public class Knight extends Piece{
 	/**
 	 * Initializes a Knight piece the given String for a name
 	 * and the Player it belongs to
-	 * @param name
-	 * @param p
+	 * @param name String that appears on the board
+	 * @param p Player the piece belongs to
 	 */
 	public Knight(String name, Player p){
 		super(name, p);
