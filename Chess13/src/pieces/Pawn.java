@@ -75,6 +75,11 @@ public class Pawn extends Piece{
 					return false;
 				}
 			}
+			if(dest[0] == start[0] +1 && dest[1] == start[1]-1){
+				if(board.getPlayer(dest[0], dest[1]) != this.getPlayer()){
+					return true;
+				}
+			}
 			
 		}
 		if(this.getPlayer().getColor() == "white"){
@@ -104,6 +109,11 @@ public class Pawn extends Piece{
 			}
 			// taking another players piece
 			if(dest[0] == start[0] -1 && dest[1] == start[1]-1){
+				if(board.getPlayer(dest[0], dest[1]) != this.getPlayer()){
+					return true;
+				}
+			}
+			if(dest[0] == start[0] -1 && dest[1] == start[1]+1){
 				if(board.getPlayer(dest[0], dest[1]) != this.getPlayer()){
 					return true;
 				}

@@ -1,4 +1,4 @@
-//By Tim Remmert and Mengyu Gong
+
 package application;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +33,6 @@ public class Chess13 {
 		while(!checkmate){
 			gameBoard.printBoard();
 			System.out.println();
-			//if()
 			if (wturn){
 				if(gameBoard.findCheck(wK[0], wK[1])){
 					if(gameBoard.findCheckMate(wK)){
@@ -113,6 +112,21 @@ public class Chess13 {
 				}
 				gameBoard.setOccuppiedTile(gameBoard.getPiece(piece[0], piece[1]), move.substring(3,5));
 				gameBoard.setEmptyTile(move.substring(0,2));
+				//check Promotion
+				if(gameBoard.getPiece(dest[0], dest[1]) instanceof Pawn){
+					if(gameBoard.getPlayer(dest[0], dest[1]).getColor() == "white"){
+						if(dest[0] == 0){
+							Piece q2 = new Queen("wQ", gameBoard.getPlayer(dest[0], dest[1]));
+							gameBoard.setOccuppiedTile(q2, dest[0], dest[1]);
+						}
+					}
+					else if(gameBoard.getPlayer(dest[0], dest[1]).getColor() == "black"){
+						if(dest[0] == 7){
+							Piece q3 = new Queen("bQ", gameBoard.getPlayer(dest[0], dest[1]));
+							gameBoard.setOccuppiedTile(q3, dest[0], dest[1]);
+						}
+					}
+				}
 				if(piece[0] == wK[0] && piece[1] == wK[1]){
 					wK = gameBoard.map(move.substring(3,5));
 				}
